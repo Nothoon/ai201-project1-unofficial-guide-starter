@@ -24,7 +24,7 @@ I will collect original text from posts, comments, reviews, and articles, preser
 | 3 |SDSU Reddit Thread|A thread talking about where to live off-campus|https://www.reddit.com/r/SDSU/comments/1jjml66/where_to_live_offcampus/|
 | 4 |SDSU Reddit Thread|A thread asking where to house off-campus as a transfer student|https://www.reddit.com/r/SDSU/comments/1s3vvzl/i_got_accepted_housing/|
 | 5 |SDSU Reddit Thread|A thread asking about off campus living expenses|https://www.reddit.com/r/SDSU/comments/1r63ttx/off_campus_living/|
-| 6 |SDSU Facebook Group|A Facebook group regarding SDSU off-campus housing search|https://www.facebook.com/groups/sandiegostateuniversitysdsuhousingsublet/|
+| 6 |SDSU Reddit Thread|A thread asking for last minute housing|https://www.reddit.com/r/SDSU/comments/1lq9pjr/im_panicking/|
 | 7 |Rive Apartments Yelp|A commonly rented apartment complex's Yelp Page|https://www.yelp.com/biz/the-rive-san-diego-4?dd_referrer=https%3A%2F%2Fwww.google.com%2F|
 | 8 |Union Grantville Apartments Yelp |A commonly rented apartment complex's Yelp Page|https://www.yelp.com/biz/union-grantville-san-diego |
 | 9 |5025 Apartments Yelp|A commonly rented apartment complex's Yelp Page|https://www.yelp.com/biz/fifty-twenty-five-san-diego-4|
