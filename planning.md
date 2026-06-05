@@ -1,19 +1,12 @@
 # Project 1 Planning: The Unofficial Guide
 
-> Write this document before you write any pipeline code.
-> Your spec and architecture diagram are what you'll use to direct AI tools (Claude, Copilot, etc.) to generate your implementation — the more specific they are, the more useful the generated code will be.
-> Update the Retrieval Approach and Chunking Strategy sections if you change your approach during implementation.
-> Update this file before starting any stretch features.
-
----
-
 ## Domain
 
 <!-- What domain did you choose? Why is this knowledge valuable and hard to find through official channels? -->
 
-**Off Campus Housing Expieriences for SDSU** 
+**Off-Campus Housing Experiences for SDSU Students** 
 
-There are no official channels regarding best and worse places to get housing off campus near SDSU. Since Juniors and Seniors are unable to live on campus this is a frequently searched for domain.
+This domain is valuable because SDSU students often rely on informal sources like Reddit, Yelp, and Facebook to learn about rent, parking, maintenance, amenities, safety, and management quality. Official housing pages may list options, but they usually do not capture student experiences or complaints.
 
 ---
 
@@ -21,6 +14,8 @@ There are no official channels regarding best and worse places to get housing of
 
 <!-- List your specific sources: URLs, subreddit names, forum threads, or file descriptions.
      Aim for at least 10 sources that together cover different subtopics or perspectives within your domain. -->
+
+I will collect original text from posts, comments, reviews, and articles, preserving source URLs and date accessed. Each source will be saved as a separate .txt file with metadata at the top.
 
 | # | Source | Description | URL or location |
 |---|--------|-------------|-----------------|
@@ -51,7 +46,7 @@ There are no official channels regarding best and worse places to get housing of
 150
 
 **Reasoning:**
-800 is a good midrange for short and longer texts. I have reddit posts but also yelp reviews that may be longer. 150 overlap is less than a fourth of the chunk size to reduce repition but still include fuller ideas.
+I will first split sources by natural units such as Reddit comments, Yelp reviews, and article paragraphs. Items longer than 800 characters will be split into overlapping chunks with 150 characters of overlap. This keeps most short reviews intact while preventing long reviews or articles from exceeding the context size. The overlap helps preserve apartment names and complaints that may appear near chunk boundaries.
 
 ---
 
@@ -62,6 +57,7 @@ There are no official channels regarding best and worse places to get housing of
      If you were deploying this for real users and cost wasn't a constraint, what tradeoffs
      would you weigh in choosing a different embedding model — context length, multilingual
      support, accuracy on domain-specific text, latency? -->
+ChromaDB will store each chunk with metadata including source URL, platform, apartment name, and chunk ID. Retrieval will use cosine similarity and return the top 6 chunks.
 
 **Embedding model:**
 sentence-transformers (all-MiniLM-L6-v2)
@@ -89,11 +85,11 @@ A faster embedding model would probably be better than a slow one so that someon
 
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 |What are the most rented apartment complexes|Rive, 5025, Grantville|
-| 2 |How is the maintenence at 5025|Slow and unresponsive|
-| 3 |What is the average pricing for an apartment|$1000-$2000|
-| 4 |How are the amenties at the Rive|Includes a full gym, pool, and shuttle bus to school|
-| 5 |What do students say about the parking situation at Union Grantville|Expensive and not worth it|
+| 1 |Which apartment complexes appear most often in the collected SDSU housing sources?|The answer should identify frequently mentioned complexes such as The Rive, 5025, and Union Grantville if supported by retrieved sources.|
+| 2 |What do students/reviewers say about maintenance at 5025?| The answer should mention slow or unresponsive maintenance only if retrieved reviews support it, and should cite the relevant source chunks.|
+| 3 |What rent range do students mention for off-campus housing near SDSU?|The answer should give the range found in the sources and clarify whether it is per person or per unit when possible.|
+| 4 |What amenities are mentioned for The Rive?|The answer should mention amenities such as gym, pool, and shuttle only if those appear in the collected sources.|
+| 5 |What complaints do students/reviewers make about parking at Union Grantville?|The answer should mention cost/value concerns if supported and distinguish between one review and repeated complaints.|
 
 ---
 
@@ -103,7 +99,7 @@ A faster embedding model would probably be better than a slow one so that someon
      Consider: noisy or inconsistent documents, missing source attribution, off-topic
      retrieval, chunks that split key information across boundaries. -->
 
-1. I anticipate that it will retrieve maybe irrelevent information based on the specifity of the question if its not mentioned anywhere in the reviews.
+1. I anticipate that it will retrieve irrelevent information based on the specifity of the question if its not mentioned anywhere in the reviews.
 
 2. I anticipate it may have bad chunking just because of the varying size of reviews and etc.
 
@@ -205,61 +201,53 @@ A faster embedding model would probably be better than a slow one so that someon
 
 **Document Ingestion**
 
-AI Tool: ChatGPT
+AI Tool: None
 
-Input: URLS
+Input: N/A
 
-Output Expectations: text quotes
+Output Expectations: N/A
 
-Verification: Check relevance to the domain
+Verification: N/A
 
-For document ingestion the plan is to manually copy/paste reviews, comments, and articles into .txt files with the help of ChatGPT scraping relevant info.
+Document ingestion will be done manually. Reviews, comments, and articles will be pasted into a .txt document and seperated accordingly.
 
 **Chunking**
 
 AI Tool: Claude Code
 
-Input: planning.md Chunking section
+Input: `planning.md Chunking Strategy` Explain and produce a function that seperates .txt files into spec and labels them.
 
-Output Expectations: Python code with explanation
+Output Expectations: A function what when called will be able to seperate a .txt file to spec and label it with a dictionary or similar structure.
 
-Verification: Debug the function by printing out its chunk production
-
-For chunking the plan is to prompt Claude Code with planning.md's Chunking section. I will verify its code by using various printing statements to ensure its working and the correct chunking spec
+Verification: Check the elements of the dictionary/similar structure.
 
 **Embedding + Vector Store**
 
 AI Tool: Claude Code
 
-Input: Embedding tech stack (ChromaDB and sentence-transformers (all-MiniLM-L6-v2))
+Input: Using `ChromaDB` and `sentence-transformers (all-MiniLM-L6-v2)` create a function that will correctly embed text chunks and store it into ChromaDB.
 
-Output Expectations: Code that will embed the chunks and store it in ChromaDB
+Output Expectations: A function that correctly embeds chunks with all the correct information and calls the ChromaDB API to store it.
 
-Verification: Check the embedding and print chunks stored in ChromaDB
-
-For embedding and vector store the plan is to prompt Claude Code with the embedding tech stack. Letting it know that we will be processing text chunks. The expectation of output is code that will correctly embed and store into ChromaDB. I will verify by using print statements and seeing if ChromaDB is able to retrieve anything.
+Verification: Check ChromaDB for any recieved chunks
 
 **RETRIEVAL**
 
 AI Tool: Claude Code
 
-Input: Retrival section of planning.md
+Input: `planning.md Retrieval Approach` Using this spec, write a function that will retrieve the 6 most related chunks to the query from ChromaDB.
 
-Output Expectations: Code that will correctly embed the query and cosine similarity search ChromaDB and return top-k
+Output Expectations: A function that will correctly embed the query then compare it to the chunks in ChromaDB. It should return the 6 most related chunks.
 
-Verification: Check returned chunks and its relevance to the query
-
-For the retrieval part the plan is to prompt Claude Code with the retrieval section of planning.md so that it knows the specs. I expect code that correctly does a cosine similarity search and gives top-k chunks. I will verify by checking the textual content of the returned chunks and checking the cosine similarity scores of the returned chunks.
+Verification: Check the 6 returned chunks and their similarity to the query.
 
 **Generation**
 
 AI Tool: Claude Code
 
-Input: Organize chunks and prompt LLM with grounding prompt
+Input: Create a grounding prompt for the LLM to only use information that it is given. Then create a function that will correctly call the LLM API with the grounding prompt, 6 most relevant chunks, and the query. Finally, return the response from the LLM.
 
-Output Expectations: Code the correctly uses API and gives all the relevant chunks and system prompting (grounding)
+Output Expectations: A function that correctly prompts the LLM and returns a response.
 
-Verification: Check the returned response and its accuracy.
-
-For the generation part the plan is to prompt Claude Code to correctly format the returned chunks and getting a grounding prompt. The expectation is for it to generate code that will sucessfully generate a response from the LLM. I will verify by checking the questions in the evaluation plan and seeing if it matches with the LLM's responses
+Verification: Check for any returned response and its accuracy answering the query.
 
