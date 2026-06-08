@@ -85,11 +85,11 @@ A faster embedding model would probably be better than a slow one so that someon
 
 | # | Question | Expected answer |
 |---|----------|-----------------|
-| 1 |Which apartment complexes appear most often in the collected SDSU housing sources?|The answer should identify frequently mentioned complexes such as The Rive, 5025, and Union Grantville if supported by retrieved sources.|
-| 2 |What do students/reviewers say about maintenance at 5025?| The answer should mention slow or unresponsive maintenance only if retrieved reviews support it, and should cite the relevant source chunks.|
-| 3 |What rent range do students mention for off-campus housing near SDSU?|The answer should give the range found in the sources and clarify whether it is per person or per unit when possible.|
-| 4 |What amenities are mentioned for The Rive?|The answer should mention amenities such as gym, pool, and shuttle only if those appear in the collected sources.|
-| 5 |What complaints do students/reviewers make about parking at Union Grantville?|The answer should mention cost/value concerns if supported and distinguish between one review and repeated complaints.|
+| 1 |Which apartment complexes are the most commonly mentioned?|The answer should identify frequently mentioned complexes such as The Rive, 5025, and Union Grantville.
+| 2 |What do students/reviewers say about maintenance at 5025?|The answer should mention slow or unresponsive maintenance.|
+| 3 |What rent range do students mention for off-campus housing near SDSU?|The answer should range between $1000-$3000|
+| 4 |What amenities are mentioned for The Rive?|The answer should mention amenities such as gym, pool, and shuttle.|
+| 5 |What complaints do students/reviewers make about parking at Union Grantville?|The answer should mention cost/value concerns.|
 
 ---
 

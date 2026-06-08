@@ -26,8 +26,8 @@ from pathlib import Path
 from typing import Optional
 
 # --- Chunking parameters (from planning.md "Chunking Strategy") --------------
-CHUNK_SIZE = 800   # characters
-OVERLAP = 150      # characters
+CHUNK_SIZE = 500   # characters
+OVERLAP = 100    # characters
 
 # Folder containing the manually-collected raw .txt sources.
 DOCUMENTS_DIR = Path(__file__).parent / "documents"
@@ -208,11 +208,12 @@ if __name__ == "__main__":
     print(f"\nChunks over {CHUNK_SIZE} chars (should be 0): {oversized}")
 
     if chunks:
-        print("\nExample chunk:")
-        example = chunks[0]
-        preview = {k: v for k, v in example.items() if k != "text"}
-        print(json.dumps(preview, indent=2))
-        print("  text:", example["text"][:200], "...")
+        print("\nExample chunks:")
+        for chunk in chunks[:5]:
+            example = chunk
+            preview = {k: v for k, v in example.items() if k != "text"}
+            print(json.dumps(preview, indent=2))
+            print("  text:", example["text"])
 
     # Persist the chunks so Stage 3 (embedding + ChromaDB) can load them.
     out_path = Path(__file__).parent / "chunks.json"

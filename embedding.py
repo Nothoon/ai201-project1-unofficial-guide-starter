@@ -210,6 +210,7 @@ if __name__ == "__main__":
     sample_queries = [
         "What amenities are mentioned for The Rive?",
         "What do reviewers say about maintenance at 5025?",
+        "What is the average rent for off-campus housing around SDSU?"
     ]
     for query in sample_queries:
         print("\n" + "=" * 70)
@@ -222,4 +223,4 @@ if __name__ == "__main__":
                 f"\n[{rank}] similarity={result['similarity']:.3f}  "
                 f"({label} — {meta['source_file']})"
             )
-            print("    " + result["text"][:200].replace("\n", " ") + " ...")
+            print("    " + result["text"])
